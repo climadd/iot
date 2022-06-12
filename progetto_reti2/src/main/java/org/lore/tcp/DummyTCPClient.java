@@ -1,15 +1,19 @@
 package org.lore.tcp;
 
+import org.lore.app.TCPClientApp;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class GreetClient {
+public class DummyTCPClient extends TCPClientApp {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+
+
 
     public void startConnection(String ip, int port) throws IOException {
         clientSocket = new Socket(ip, port);

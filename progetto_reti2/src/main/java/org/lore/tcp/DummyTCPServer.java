@@ -8,6 +8,6 @@ public class DummyTCPServer extends TCPServer {
     @Override
     public void compute(String line) {
         System.out.println("Dummy TCP Server receives: "+ line);
-        out.println("I received this message: "+ line.toUpperCase()); //operazione sul contenuto della stringa passata attraverso la socket
+        out.println("I received this message: "+ line.toUpperCase()); //operazione sul contenuto della stringa
     }
 }
