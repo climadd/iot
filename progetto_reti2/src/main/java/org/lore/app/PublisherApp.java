@@ -24,7 +24,7 @@ public class PublisherApp {
         MqttPublisher mqttPub = new MqttPublisher(mqttConf);
         mqttPub.connect();
         for (int i = 0; i < 4; i++) {
-            mqttPub.publish("/topic/test/lore", System.currentTimeMillis() + " - msg");
+            mqttPub.publish("INSERISCI TOPIC GIUSTO", "INSERISCI MESSAGGIO GIUSTO JSON");
             Thread.sleep(1000L);
 
         }

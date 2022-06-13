@@ -5,7 +5,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.lore.mqtt.MqttConfig;
 import org.lore.mqtt.MqttReceiver;
 import org.lore.mqtt.listeners.DummyListener;
-
+import org.lore.mqtt.listeners.GWBEListener;
 
 
 public class ReceiverApp {
@@ -27,8 +27,8 @@ public class ReceiverApp {
         MqttConfig mqttconf = new MqttConfig("TestRecIDLore","pissir","pissir2020","tcp://smartcity-challenge.edu-al.unipmn.it");
         MqttReceiver mqttRec = new MqttReceiver(mqttconf);
         mqttRec.connect();
-        DummyListener listener = new DummyListener();
-        mqttRec.subscribe("/topic/test/lore", listener);
+        GWBEListener listener = new GWBEListener();
+        mqttRec.subscribe("INSERISCI TOPIC GIUSTO", listener);
 
     }
 }
