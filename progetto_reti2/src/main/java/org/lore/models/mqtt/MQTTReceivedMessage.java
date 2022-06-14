@@ -5,8 +5,17 @@ public class MQTTReceivedMessage {
    private MQTTMessageDevice device;
    private MQTTMessageState state;
    private MQTTMessageLevel level;
+   private MQTTMessageMode mode;
 
     public MQTTReceivedMessage() {
+    }
+
+    public MQTTReceivedMessage(MQTTMessageType type, MQTTMessageDevice device, MQTTMessageState state, MQTTMessageLevel level, MQTTMessageMode mode) {
+        this.type = type;
+        this.device = device;
+        this.state = state;
+        this.level = level;
+        this.mode = mode;
     }
 
     public MQTTMessageType getType() {
@@ -41,10 +50,11 @@ public class MQTTReceivedMessage {
         this.level = level;
     }
 
-    public MQTTReceivedMessage(MQTTMessageType type, MQTTMessageDevice device, MQTTMessageState state, MQTTMessageLevel level) {
-        this.type = type;
-        this.device = device;
-        this.state = state;
-        this.level = level;
+    public MQTTMessageMode getMode() {
+        return mode;
+    }
+
+    public void setMode(MQTTMessageMode mode) {
+        this.mode = mode;
     }
 }

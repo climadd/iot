@@ -32,6 +32,7 @@ public class GWBEListener implements IMqttMessageListener {
                 device:"actuator",
                 state:"on/off",
                 level:"low/medium/high"
+                mode:"auto/manual"
                 }
 
             - Messaggio su TOPIC Attuatori di richiesta stato e livello attuale
