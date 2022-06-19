@@ -17,6 +17,7 @@ public abstract class TCPServer {
     }
 
     public void start() throws IOException {
+        System.out.println("Starting TCP Server "+ this.getClass()+ " on port "+ conf.getPort());
         serverSocket = new ServerSocket(conf.getPort());
         while(true){
             new ClientHandler(serverSocket.accept()).start();           //start bloccante, a ogni nuovo ciclo apre una nuova socket

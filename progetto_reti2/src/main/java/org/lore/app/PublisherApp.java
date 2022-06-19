@@ -23,10 +23,10 @@ public class PublisherApp {
         MqttConfig mqttConf = new MqttConfig("TestPubIDLore","pissir","pissir2020","tcp://smartcity-challenge.edu-al.unipmn.it");
         MqttPublisher mqttPub = new MqttPublisher(mqttConf);
         mqttPub.connect();
-        for (int i = 0; i < 4; i++) {
-            mqttPub.publish("INSERISCI TOPIC GIUSTO", "INSERISCI MESSAGGIO GIUSTO JSON");
-            Thread.sleep(1000L);
 
-        }
+            mqttPub.publish("azienda3/serra5/sensori/temperatura/rx", "{\"type\":\"read\",\"device\":\"sensori\"}");
+            Thread.sleep(1000L);
+            mqttPub.publish("azienda3/serra5/attuatori/temperatura/rx", "{\"type\":\"write\",\"device\":\"attuatori\",\"state\":\"on\",\"level\":\"high\",\"mode\":\"manual\"}");
+
     }
 }

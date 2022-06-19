@@ -9,13 +9,14 @@ public class MQTTReceivedMessageTest {
 
     @Test
     public void jsonTest(){
-        String msg = "{\"type\":\"write\",\"device\":\"actuator\",\"state\":\"off\",\"level\":\"high\"}";
+        String msg = "{\"type\":\"write\",\"device\":\"actuator\",\"state\":\"off\",\"level\":\"high\",\"mode\":\"auto\"}";
         Gson gson = new Gson();
         MQTTReceivedMessage receivedMessage = gson.fromJson(msg,MQTTReceivedMessage.class);
         System.out.println(receivedMessage.getType());
         System.out.println(receivedMessage.getDevice());
         System.out.println(receivedMessage.getState());
         System.out.println(receivedMessage.getLevel());
+        System.out.println(receivedMessage.getMode());
         Assertions.assertEquals(MQTTMessageType.write, receivedMessage.getType());  //manda eccezione se i parametri sono differenti
     }
 

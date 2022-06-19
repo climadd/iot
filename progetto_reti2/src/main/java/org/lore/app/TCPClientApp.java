@@ -1,6 +1,6 @@
 package org.lore.app;
 
-import org.lore.tcp.DummyTCPClient;
+import org.lore.tcp.SimpleTCPClient;
 import org.lore.tcp.TCPConfig;
 
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.io.IOException;
 public class TCPClientApp {
     public static void main(String[] args) throws IOException, InterruptedException {
         TCPConfig conf = new TCPConfig(9999,"127.0.0.1");
-        DummyTCPClient tcpClient = new DummyTCPClient(conf);
+        SimpleTCPClient tcpClient = new SimpleTCPClient(conf);
         tcpClient.startConnection();
         String response = tcpClient.sendMessage("aye aye");
         System.out.println(response);
