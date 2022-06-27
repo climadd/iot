@@ -1,16 +1,17 @@
 package org.lore.models.mqtt;
 
-public class MQTTReceivedTopic {
+public class MQTTTopic {
     private String enterprise;
     private String field;
     private MQTTMessageDevice device;
     private MQTTDeviceType deviceType;
     private MQTTTopicDirection direction;
+    private final String SEPARATOR = "/";
 
-    public MQTTReceivedTopic() {
+    public MQTTTopic() {
     }
 
-    public MQTTReceivedTopic(String enterprise, String field, MQTTMessageDevice device, MQTTDeviceType deviceType, MQTTTopicDirection direction) {
+    public MQTTTopic(String enterprise, String field, MQTTMessageDevice device, MQTTDeviceType deviceType, MQTTTopicDirection direction) {
         this.enterprise = enterprise;
         this.field = field;
         this.device = device;
@@ -56,5 +57,19 @@ public class MQTTReceivedTopic {
 
     public void setDirection(MQTTTopicDirection direction) {
         this.direction = direction;
+    }
+
+    public String toTopicString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.enterprise);
+        stringBuilder.append(SEPARATOR);
+        stringBuilder.append(this.field);
+        stringBuilder.append(SEPARATOR);
+        stringBuilder.append(this.device.name());
+        stringBuilder.append(SEPARATOR);
+        stringBuilder.append(this.deviceType.name());
+        stringBuilder.append(SEPARATOR);
+        stringBuilder.append(this.direction.name());
+        return stringBuilder.toString();
     }
 }

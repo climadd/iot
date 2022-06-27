@@ -19,10 +19,19 @@ public class MqttPublisher {
     public void connect() throws MqttException {
         publisher.connect(connectOpts);
     }
-    public void publish(String topic,String msg) throws MqttException {
+    public void publish(String topic,String msg, boolean verbose) throws MqttException {
         MqttMessage mqttMessage = new MqttMessage(msg.getBytes(StandardCharsets.UTF_8));
         publisher.publish(topic,mqttMessage);
-        System.out.println("Message "+msg+" sent to topic "+ topic);
+        if (verbose) System.out.println("Message "+msg+" sent to topic "+ topic);
 
+    }
+    public void publish(String topic, String msg) throws MqttException {
+        publish(topic,msg,false);
+    }
+    public void disconnect(long timeout) throws MqttException {
+        publisher.disconnect(timeout);
+    }
+    public void close() throws MqttException {
+        publisher.close();
     }
 }
