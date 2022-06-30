@@ -136,7 +136,7 @@ public class GWBEListener implements IMqttMessageListener {
                         actuatorTCPClient.stopConnection();
                         break;
                     default:
-                        response = "";          //non ci entriamo mai
+                        response = "";          //non ci entrerò mai
                 }
                 MQTTTopic mqttResponseTopic = new MQTTTopic(mqttReceivedTopic.getEnterprise(),mqttReceivedTopic.getField(),mqttReceivedTopic.getDevice(),mqttReceivedTopic.getDeviceType(),MQTTTopicDirection.sx);
                 mqttPublisher.connect();

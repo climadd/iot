@@ -17,7 +17,7 @@ public class TCPClientApp {
         System.out.println(response);
         response = tcpClient.sendMessage("ByeBye");
         System.out.println(response);
-        response = tcpClient.sendMessage("NotWork"); //errore
+        response = tcpClient.sendMessage("NotWorking"); //errore
         System.out.println(response);
 
         tcpClient.stopConnection();

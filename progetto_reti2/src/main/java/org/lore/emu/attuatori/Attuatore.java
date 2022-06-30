@@ -55,7 +55,7 @@ public class Attuatore {
 
 
 //		panel.add(icona);
-//		panel.add(labello);
+//		panel.add(label);
 //		panel.add(form);
 
 

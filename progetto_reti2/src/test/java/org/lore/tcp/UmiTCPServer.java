@@ -20,8 +20,10 @@ public class UmiTCPServer extends TCPServer{
     public void compute(String line, PrintWriter out) {
         System.out.println("--> UmiTCPServer has received: "+ line);
 
+        //i'm gonna build the object msg with the contents that i received through line
         MQTTReceivedMessage msg = gson.fromJson(line,MQTTReceivedMessage.class);
         switch(msg.getType()) {
+            //in case the msg is a write, i'm gonna change the device's state and put together a response message as feedback
             case write:
                 MQTTResponseMessage writeResponse = new MQTTResponseMessage();
                 writeResponse.setDevice(msg.getDevice());
@@ -34,6 +36,7 @@ public class UmiTCPServer extends TCPServer{
                 out.println(writeJsonMessage);
                 System.out.println("<-- UmiTCPServer has sent: "+ writeJsonMessage);
                 break;
+            //in case the msg is a read, i'm gonna get the device measure and report it back through a response message as reply
             case read:
                 MQTTResponseMessage readResponse = new MQTTResponseMessage();
                 readResponse.setDevice(msg.getDevice());

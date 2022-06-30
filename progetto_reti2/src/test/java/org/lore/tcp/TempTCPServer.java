@@ -15,16 +15,17 @@ public class TempTCPServer extends TCPServer {
     public TempTCPServer(TCPConfig tcpConfig) {
         super(tcpConfig);
         gson = new Gson();
-
     }
 
     @Override
     public void compute(String line, PrintWriter out) {
         System.out.println("--> TempTCPServer has received: "+line);
 
-        MQTTReceivedMessage msg = gson.fromJson(line, MQTTReceivedMessage.class);       //creo oggetto msg con il contenuto in arrivo da line
+        //i'm gonna build the object msg with the contents that i received through line
+        MQTTReceivedMessage msg = gson.fromJson(line, MQTTReceivedMessage.class);
         switch(msg.getType()){
             case write:
+                //in case the msg is a write, i'm gonna change the device's state and put together a response message as feedback
                 //TODO: cambio valori dei miei emulatori
                 MQTTResponseMessage writeResponse = new MQTTResponseMessage();
                 writeResponse.setDevice(msg.getDevice());
@@ -37,6 +38,7 @@ public class TempTCPServer extends TCPServer {
                 out.println(writeJsonMessage);
                 System.out.println("<-- TempTCPServer has sent: "+writeJsonMessage);
                 break;
+            //in case the msg is a read, i'm gonna get the device measure and report it back through a response message as reply
             case read:
                 MQTTResponseMessage readResponse = new MQTTResponseMessage();
                 readResponse.setDevice(msg.getDevice());
