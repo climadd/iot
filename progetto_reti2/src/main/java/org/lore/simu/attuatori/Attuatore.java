@@ -1,11 +1,11 @@
-package org.lore.emu.attuatori;
+package org.lore.simu.attuatori;
 
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 
+// TODO: metti la logica in una classe differente, nel main richiama costrutt e metodi
 //select x ID attuatore
 
 
@@ -85,6 +85,14 @@ public class Attuatore {
 
         finestra.setVisible(true);
 
+        //FUNZIONE REPAINT PER L'ON/OFF probabilmente devo usare paint e non se
+        //oppure event listener per il cambio di variabile
+        if(true) {
+            ledTem.repaint();
+            ledUmi.repaint();
+            ledIll.repaint();
+
+        }
     }
 
 }

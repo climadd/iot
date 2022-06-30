@@ -4,6 +4,10 @@ import org.eclipse.paho.client.mqttv3.*;
 import org.lore.mqtt.MqttConfig;
 import org.lore.mqtt.MqttPublisher;
 
+
+/**
+ * Backend simulator for the publish of MQTT messages
+ */
 public class BackendMessageSender {
     public static void main(String[] args) throws MqttException, InterruptedException {
 

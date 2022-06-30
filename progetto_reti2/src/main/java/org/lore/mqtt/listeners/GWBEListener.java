@@ -84,30 +84,34 @@ public class GWBEListener implements IMqttMessageListener {
     private Map<String, SimpleTCPClient> sensorTCPClientMap;      //mappa per creazione dinamica delle connessioni TCP ai miei sensori/attuat.
     private Map<String, SimpleTCPClient> actuatorTCPClientMap;
     private MqttPublisher mqttPublisher;
+
     public GWBEListener(Map<String, TCPConfig> sensorTCPConfigMap, Map<String, TCPConfig> actuatorTCPConfigMap, MqttConfig mqttPublisherConfig) throws MQTTConfigException, IOException, MqttException {
         this.gson = new Gson();
         this.sensorTCPClientMap = new HashMap<>();
         this.actuatorTCPClientMap = new HashMap<>();
+
+        //initialize sensor TCP clients for communication with sensors
         for (String sensorName : sensorTCPConfigMap.keySet()) {               //spiegazione sul test MapTest
             TCPConfig conf = sensorTCPConfigMap.get(sensorName);
             if(conf.getIp()==null){
                 throw new MQTTConfigException("TCP Client needs IP not null");
             }
             SimpleTCPClient simpleTCPClient = new SimpleTCPClient(conf);
- //           simpleTCPClient.startConnection();
             sensorTCPClientMap.put(sensorName, simpleTCPClient);
         }
+        //initialize actuator TCP clients for communication with actuators
         for(String actuatorName : actuatorTCPConfigMap.keySet()){
             TCPConfig conf = actuatorTCPConfigMap.get(actuatorName);
             if(conf.getIp()==null) {
                 throw new MQTTConfigException("TCP Client needs IP not null");
             }
             SimpleTCPClient simpleTCPClient = new SimpleTCPClient(conf);
-  //          simpleTCPClient.startConnection();
             actuatorTCPClientMap.put(actuatorName, simpleTCPClient);
         }
         mqttPublisher = new MqttPublisher(mqttPublisherConfig);
     }
+
+    //as the MQTT message arrives, topic gets splitted and message gets unmarshalled
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         try {
@@ -121,8 +125,10 @@ public class GWBEListener implements IMqttMessageListener {
                 System.out.println("--> Received Message " + gson.toJson(mqttReceivedMessage));
 
                 String msg = gson.toJson(mqttReceivedMessage);
-                String response;                                //SARA' IL MESSAGGIO CHE INOLTRERO' VERSO IL BACKEND
-                switch(mqttReceivedTopic.getDevice()){              //BREAK OBBLIGATORIO ALLA FINE DI OGNI CASE IN SWITCH
+                //initialize the response message that it's gonna be sent to the backend
+                String response;
+                switch(mqttReceivedTopic.getDevice()){
+                   //depending on topic Device (sensori/attuatori) and Devicetype (temperatura/umidita/illuminazione):
                     case sensori:
                         SimpleTCPClient sensorTCPClient = sensorTCPClientMap.get(mqttReceivedTopic.getDeviceType().name());
                         sensorTCPClient.startConnection();

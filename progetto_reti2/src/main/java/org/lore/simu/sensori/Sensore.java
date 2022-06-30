@@ -1,4 +1,4 @@
-package org.lore.emu.sensori;
+package org.lore.simu.sensori;
 
 import java.util.Random;
 

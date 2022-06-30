@@ -1,4 +1,4 @@
-package org.lore.emu.attuatori;
+package org.lore.simu.attuatori;
 
 public class AttuatConfig {
 

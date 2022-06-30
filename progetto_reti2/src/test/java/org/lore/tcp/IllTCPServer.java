@@ -23,7 +23,7 @@ public class IllTCPServer extends TCPServer{
         switch(msg.getType()){
             case write:
                 //in case the msg is a write, i'm gonna change the device's state and put together a response message as feedback
-                //TODO: cambio valori dei miei emulatori
+                //TODO: cambio valori dei miei simulatori
                 MQTTResponseMessage writeResponse = new MQTTResponseMessage();
                 writeResponse.setDevice(msg.getDevice());
                 writeResponse.setLevel(msg.getLevel());

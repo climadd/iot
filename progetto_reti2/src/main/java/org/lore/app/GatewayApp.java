@@ -21,11 +21,11 @@ public class GatewayApp {
         MqttReceiver mqttRec = new MqttReceiver(mqttconf);
         mqttRec.connect();
 
-        //i'm gonna create a map for sensor devices, another one for actuator devices
+        //create a map for sensor devices, another one for actuator devices
         Map<String, TCPConfig> sensorTCPConfigMap = new HashMap<>();
         Map<String, TCPConfig> actuatorTCPConfigMap = new HashMap<>();
 
-        //im gonna create two temperatura TCP configurations (sensor and actuator) and feature them onto their respective map
+        //create two temperatura TCP configurations (sensor and actuator) and feature them onto their respective map
         TCPConfig tempTCPConfig = new TCPConfig(5001,"127.0.0.1");
         TCPConfig actTempTCPConfig = new TCPConfig(5002,"127.0.0.1");
         sensorTCPConfigMap.put(MQTTDeviceType.temperatura.name(), tempTCPConfig);
@@ -43,10 +43,10 @@ public class GatewayApp {
         sensorTCPConfigMap.put(MQTTDeviceType.illuminazione.name(), illTCPConfig);
         actuatorTCPConfigMap.put(MQTTDeviceType.illuminazione.name(), actIllTCPConfig);
 
+        //create a new listener through the GWBEListener class and subcribe to one or various topics
         MqttConfig mqttPublisherConfig = new MqttConfig("GWPublisherID","pissir","pissir2020","tcp://smartcity-challenge.edu-al.unipmn.it");
         GWBEListener listener = new GWBEListener(sensorTCPConfigMap, actuatorTCPConfigMap,mqttPublisherConfig);
         mqttRec.subscribe("3/5/+/+/rx", listener);
-        //TODO: come per temperatura, faccio i simulatori per le altre 2 mappe illuminazione e umidita
 
     }
 }
