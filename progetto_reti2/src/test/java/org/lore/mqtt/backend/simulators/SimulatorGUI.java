@@ -22,14 +22,11 @@ public class SimulatorGUI {
     private IllTCPServer illTCPActuatorServer;
 
     private JFrame window;
-    private JPanel tempPanel;
-    private JPanel umiPanel;
-    private JPanel illPanel;
+    private JPanel panel;
     private  JLabel title;
     private JSeparator titleSeparator;
     private JSeparator tempSeparator;
     private JSeparator umiSeparator;
-    private JSeparator illSeparator; //inutile?
 
     private JLabel tempLed;
     private JLabel tempLevel;
@@ -69,26 +66,19 @@ public class SimulatorGUI {
         window = new JFrame();
         window.setSize(600,450);
 
-        tempPanel = new JPanel();
-        tempPanel.setSize(600,400);
-
-//
-//        umiPanel = new JPanel();
-//        umiPanel.setSize(600,100);
-//
-//        illPanel = new JPanel();
-//        illPanel.setSize(600,100);
+        panel = new JPanel();
+        panel.setSize(300,300);
 
 
         title = new JLabel("CURRENT SIMULATOR: "+ simulatorConfig.getEnterprise()+"/"+simulatorConfig.getField() );
-       // titleSeparator = new JSeparator();
-//        titleSeparator.setOrientation(SwingConstants.HORIZONTAL);
-//        titleSeparator.setForeground(Color.RED);
+        titleSeparator = new JSeparator();
+        titleSeparator.setOrientation(SwingConstants.HORIZONTAL);
+        titleSeparator.setForeground(Color.ORANGE);
 
         //campi temperatura
         tempSeparator = new JSeparator();
         tempSeparator.setOrientation(SwingConstants.HORIZONTAL);
-        tempSeparator.setForeground(Color.ORANGE);
+        tempSeparator.setForeground(Color.RED);
         tempLed = new JLabel("ACTUATOR ⬤");
         tempLevel = new JLabel("TEMPERATURE LEVEL: "+ tempTCPActuatorServer.getLevel());
         tempMode = new JLabel("TEMPERATURE MODE: "+ tempTCPActuatorServer.getMode());
@@ -97,16 +87,13 @@ public class SimulatorGUI {
         //campi umidità
         umiSeparator = new JSeparator();
         umiSeparator.setOrientation(SwingConstants.HORIZONTAL);
-        tempSeparator.setForeground(Color.YELLOW);
+        umiSeparator.setForeground(Color.MAGENTA);
         umiLed = new JLabel("ACTUATOR ⬤");
         umiLevel = new JLabel("HUMIDITY LEVEL: "+ umiTCPActuatorServer.getLevel());
         umiMode = new JLabel("HUMIDITY MODE: "+ umiTCPActuatorServer.getMode());
         umiValue = new JLabel("SENSOR HUMIDITY VALUE: "+ umiTCPSensorServer.getValue()+"%");
 
         //campi illuminazione
-//        illSeparator = new JSeparator();
-//        illSeparator.setOrientation(SwingConstants.HORIZONTAL);
-//        illSeparator.setForeground(Color.GREEN);
         illLed = new JLabel("ACTUATOR ⬤");
         illLevel = new JLabel("ILLUMAINATION LEVEL: "+ illTCPActuatorServer.getLevel());
         illMode = new JLabel("ILLUMINATION MODE: "+ illTCPActuatorServer.getMode());
@@ -232,29 +219,28 @@ public class SimulatorGUI {
         }
         window.add(title,BorderLayout.NORTH);
 
-//       tempPanel.add(titleSeparator);
-        tempPanel.add(tempValue);
-        tempPanel.add(tempLed);
-        tempPanel.add(tempLevel);
-        tempPanel.add(tempMode);
+        panel.add(titleSeparator);
+        panel.add(tempValue);
+        panel.add(tempLed);
+        panel.add(tempLevel);
+        panel.add(tempMode);
 
-        tempPanel.add(tempSeparator);
-        tempPanel.add(umiValue);
-        tempPanel.add(umiLed);
-        tempPanel.add(umiLevel);
-        tempPanel.add(umiMode);
+        panel.add(tempSeparator);
+        panel.add(umiValue);
+        panel.add(umiLed);
+        panel.add(umiLevel);
+        panel.add(umiMode);
 
 
-        tempPanel.add(umiSeparator);
-        tempPanel.add(illValue);
-        tempPanel.add(illLed);
-        tempPanel.add(illLevel);
-        tempPanel.add(illMode);
-       // illPanel.add(illSeparator);
+        panel.add(umiSeparator);
+        panel.add(illValue);
+        panel.add(illLed);
+        panel.add(illLevel);
+        panel.add(illMode);
 
-        window.add(tempPanel);
-//        window.add(umiPanel);
-//        window.add(illPanel);
+        BoxLayout tempLayout = new BoxLayout(panel,BoxLayout.PAGE_AXIS);
+        panel.setLayout(tempLayout);
+        window.add(panel);
         window.setVisible(true);
 
         while(true){
