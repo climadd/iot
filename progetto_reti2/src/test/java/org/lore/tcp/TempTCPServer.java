@@ -16,13 +16,12 @@ public class TempTCPServer extends TCPServer {
 
     private Gson gson;
 
-    //actuator's values
+    //devices' values
     private Float value;
     private MQTTMessageState state;
     private MQTTMessageLevel level;
     private MQTTMessageMode mode;
     private ScheduledExecutorService pool;
-
 
     public TempTCPServer(TCPConfig tcpConfig) {
         super(tcpConfig);
@@ -54,11 +53,11 @@ public class TempTCPServer extends TCPServer {
         pool.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
+                // Temeperature value is a range from -10°C to 50°C
                 value = (float) RandomUtils.getRandomByRange(-10, 50);
 
             }
         },0L,30L, TimeUnit.SECONDS);
-
     }
 
     @Override

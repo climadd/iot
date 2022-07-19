@@ -5,6 +5,7 @@ public class TCPConfig {
     private int port;
     private String ip;
 
+    //
     public TCPConfig(int port){
         this.port=port;
     }

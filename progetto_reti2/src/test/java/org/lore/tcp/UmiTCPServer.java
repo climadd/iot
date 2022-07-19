@@ -1,19 +1,61 @@
 package org.lore.tcp;
 
 import com.google.gson.Gson;
-import org.lore.models.mqtt.MQTTDeviceType;
-import org.lore.models.mqtt.MQTTReceivedMessage;
-import org.lore.models.mqtt.MQTTResponseMessage;
+import org.lore.models.mqtt.*;
+import org.lore.utils.RandomUtils;
 
 import java.io.PrintWriter;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class UmiTCPServer extends TCPServer{
 
     private Gson gson;
 
+    //devices' values
+    private Float value;
+    private MQTTMessageState state;
+    private MQTTMessageLevel level;
+    private MQTTMessageMode mode;
+    private ScheduledExecutorService pool;
+
+
     public UmiTCPServer(TCPConfig tcpConfig) {
         super(tcpConfig);
         gson = new Gson();
+        value = 0F;
+        state = MQTTMessageState.on;
+        level = MQTTMessageLevel.low;
+        mode = MQTTMessageMode.manual;
+        pool = Executors.newScheduledThreadPool(1);
+    }
+
+    public MQTTMessageState getState() {
+        return state;
+    }
+
+    public MQTTMessageLevel getLevel() {
+        return level;
+    }
+
+    public MQTTMessageMode getMode() {
+        return mode;
+    }
+
+    public Float getValue() {
+        return value;
+    }
+
+    public void startUmiGenerator(){
+        pool.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                // Humidity value is a range from 0% to 100%
+                value = (float) RandomUtils.getRandomByRange(0, 100);
+
+            }
+        },0L,30L, TimeUnit.SECONDS);
     }
 
     @Override
@@ -33,6 +75,9 @@ public class UmiTCPServer extends TCPServer{
                 writeResponse.setType(msg.getType());
                 writeResponse.setResult(true);                  //sto rispondendo ad una write
                 String writeJsonMessage = gson.toJson(writeResponse);
+                state = msg.getState();
+                level = msg.getLevel();
+                mode = msg.getMode();
                 out.println(writeJsonMessage);
                 System.out.println("<-- UmiTCPServer has sent: "+ writeJsonMessage);
                 break;
