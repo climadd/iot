@@ -1,4 +1,4 @@
-package org.lore.simu.attuatori;
+package org.lore.simulators;
 
 public class SimulatorConfig {
     private String enterprise;

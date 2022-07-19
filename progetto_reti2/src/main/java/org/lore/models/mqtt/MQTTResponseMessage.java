@@ -1,8 +1,8 @@
 package org.lore.models.mqtt;
 
 public class MQTTResponseMessage extends MQTTBaseMessage{
-    private Float value;               //nota sotto
-    private Boolean result;         //oggetto con valore null di default, rispetto a false come default del boolean minusocolo
+    private Float value;
+    private Boolean result;         //oggetto con valore null di default, rispetto a false sul primitivo
 
     public MQTTResponseMessage() {
     }

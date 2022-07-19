@@ -1,6 +1,6 @@
-package org.lore.mqtt.backend.simu;
+package org.lore.mqtt.backend.simulators;
 
-import org.lore.simu.attuatori.SimulatorConfig;
+import org.lore.simulators.SimulatorConfig;
 
 import java.io.IOException;
 

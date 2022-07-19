@@ -25,7 +25,7 @@ public class UmiTCPServer extends TCPServer{
         super(tcpConfig);
         gson = new Gson();
         value = 0F;
-        state = MQTTMessageState.on;
+        state = MQTTMessageState.off;
         level = MQTTMessageLevel.low;
         mode = MQTTMessageMode.manual;
         pool = Executors.newScheduledThreadPool(1);

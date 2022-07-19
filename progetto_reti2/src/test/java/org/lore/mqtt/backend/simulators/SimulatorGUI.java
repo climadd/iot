@@ -1,6 +1,6 @@
-package org.lore.mqtt.backend.simu;
+package org.lore.mqtt.backend.simulators;
 
-import org.lore.simu.attuatori.SimulatorConfig;
+import org.lore.simulators.SimulatorConfig;
 import org.lore.tcp.IllTCPServer;
 import org.lore.tcp.TCPConfig;
 import org.lore.tcp.TempTCPServer;
@@ -87,8 +87,8 @@ public class SimulatorGUI {
 
         //campi temperatura
         tempSeparator = new JSeparator();
-//        tempSeparator.setOrientation(SwingConstants.HORIZONTAL);
-//        tempSeparator.setForeground(Color.ORANGE);
+        tempSeparator.setOrientation(SwingConstants.HORIZONTAL);
+        tempSeparator.setForeground(Color.ORANGE);
         tempLed = new JLabel("ACTUATOR ⬤");
         tempLevel = new JLabel("TEMPERATURE LEVEL: "+ tempTCPActuatorServer.getLevel());
         tempMode = new JLabel("TEMPERATURE MODE: "+ tempTCPActuatorServer.getMode());
@@ -96,8 +96,8 @@ public class SimulatorGUI {
 
         //campi umidità
         umiSeparator = new JSeparator();
-//        umiSeparator.setOrientation(SwingConstants.HORIZONTAL);
-//        tempSeparator.setForeground(Color.YELLOW);
+        umiSeparator.setOrientation(SwingConstants.HORIZONTAL);
+        tempSeparator.setForeground(Color.YELLOW);
         umiLed = new JLabel("ACTUATOR ⬤");
         umiLevel = new JLabel("HUMIDITY LEVEL: "+ umiTCPActuatorServer.getLevel());
         umiMode = new JLabel("HUMIDITY MODE: "+ umiTCPActuatorServer.getMode());
