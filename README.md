@@ -26,7 +26,8 @@ The 4 classes to run the gateway process are (ordered by launch timing):
 
 
 
-##### TOPIC
+
+### MQTT MESSAGE TOPICS AND FORMAT
 
 **QUERIES**:
 	
