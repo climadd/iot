@@ -12,7 +12,7 @@ The 4 classes to run the gateway process are (ordered by launch timing):
 
 ### Project Overview
 
-<image diagram>
+(insert diagram here)
 
 -The **Gateway**, as the bridge between the *Broker* and the *IOT Devices(Sensors and Actuators)*, communicates with the *Backend* through [MQTT protocol](https://mqtt.org/getting-started/), and makes use of dynamically-allocated TCP Sockets to establish the communication to the *IOT Devices*.
 
@@ -20,7 +20,7 @@ The 4 classes to run the gateway process are (ordered by launch timing):
 
 -The **Simulated Actuators** hold *boolean* or *enumeration* type variables that are switched through the Gateway-issued Messages. The GUI lets us check their real-time status.
 	
--The **Simulated Backend is split into 2 different Java Classes: *BackendMessageSender* e *BackendMessageReceiver*, they will print on terminal each sent or recieved Message.
+-The **Simulated Backend** is split into 2 different Java Classes: *BackendMessageSender* e *BackendMessageReceiver*, they will print on terminal each sent or recieved Message.
 
 -The **Messages** are MQTT formatted, every enumeration-type data relative to both Messages and Measurements is catalogued in "main.java.org.lore.models.mqtt" project's package.
 
@@ -88,43 +88,25 @@ The 4 classes to run the gateway process are (ordered by launch timing):
 
 
 
-Funzionamento:
+### Structural Analysis
 	
-------- La GatewayApp si occuperà di ricevere messaggi MQTT su Topic e inoltarli tramite TCP socket ai Device. L'arrivo di un messaggio
-	  comporterà la costituzione di un oggetto "response" che verrà inviato al backend.
+La GatewayApp si occuperà di ricevere messaggi MQTT su Topic e inoltarli tramite TCP socket ai Device. L'arrivo di un messaggio comporterà la costituzione di un oggetto "response" che verrà inviato al backend.
 
-	 Sebbene in fase di specifica abbiamo adottato la convenzione che in un campo sia presente 3 sole coppie di device (sensore+attuatore), una per ogni deviceType 
-	 (Temperatura/Umidità/Illuminazione), il Gateway si presta comunque a eventuale espansione progettuale facendo utilizzo delle hashmaps come 
-	 struttura dinamica per poter inizializzare le socket TCP per il collegamento con i diversi devices.
+Sebbene in fase di specifica abbiamo adottato la convenzione che in un campo sia presente 3 sole coppie di device (sensore+attuatore), una per ogni deviceType (Temperatura/Umidità/Illuminazione), il Gateway si presta comunque a eventuale espansione progettuale facendo utilizzo delle hashmaps come struttura dinamica per poter inizializzare le socket TCP per il collegamento con i diversi devices.
 
-	 nella GatwayApp invocherò il metodo ".subscribe" a cui passerò come parametro l'oggettino "listener" creato sulla base della classe GWBEListener,
-	 in cui è anche presente anche la logica del processing dei messaggi MQTT: non appena un messaggio verrà ricevuto, il metodo ".messageArrived" di GWBEListener 
-	 verrà invocato in modo da effettuare la split dei diversi campi del topic e l'unmarshalling del json per interpretarlo e permettere al Gateway di 
-	 estrapolare quali saranno le informazioni da mandare e dove mandarle.
+Nella GatwayApp invocherò il metodo ".subscribe" a cui passerò come parametro l'oggettino "listener" creato sulla base della classe GWBEListener, in cui è anche presente anche la logica del processing dei messaggi MQTT: non appena un messaggio verrà ricevuto, il metodo ".messageArrived" di GWBEListener verrà invocato in modo da effettuare la split dei diversi campi del topic e l'unmarshalling del json per interpretarlo e permettere al Gateway di estrapolare quali saranno le informazioni da mandare e dove mandarle.
 
 
-
--------il BackendMessageSender si occuperà di simulare le richieste che partono dal backend, stampando anche su terminale i messaggi MQTT inviati.
-	 Esso effettuerà la .disconnect() e la .close() una volta inviati tutti i messaggi previsti. 
+Il BackendMessageSender si occuperà di simulare le richieste che partono dal backend, stampando anche su terminale i messaggi MQTT inviati. Esso effettuerà la .disconnect() e la .close() una volta inviati tutti i messaggi previsti. 
 
 
-
--------il BackendMessageReceiver simula il reciever sul lato backend e stamperà su teminale i messaggi ricevuti.
-	 alla sua .subscribe() passerò sia il topic adeguato, sia il DummyListener.java: una interfaccia sulla base della classe IMqttMessageListener
-	 che effettua anche la print dei messaggi arrivati.
+il BackendMessageReceiver simula il reciever sul lato backend e stamperà su teminale i messaggi ricevuti. alla sua .subscribe() passerò sia il topic adeguato, sia il DummyListener.java: una interfaccia sulla base della classe IMqttMessageListener che effettua anche la print dei messaggi arrivati.
 
 
-
--------la SimulatorGUIApp, la cui logica è contenuta in SimulatorGUI, consiste nell'interfaccia grafica che ci permette di controllare le misure dei sensori
-	 rilevate periodicamente (Inizializzati a 0; ogni 30 secondi invoco il mio metodo .getRandomByRange() contenuto nella classe RandomUtils nel package
-	 "test.java.org.lore.utils"), e le variabili relative allo Stato, Livello e Modalità (descritte con varie enum nel package "main.java.org.lore.models.mqtt").
+la SimulatorGUIApp, la cui logica è contenuta in SimulatorGUI, consiste nell'interfaccia grafica che ci permette di controllare le misure dei sensori rilevate periodicamente (Inizializzati a 0; ogni 30 secondi invoco il mio metodo .getRandomByRange() contenuto nella classe RandomUtils nel package "test.java.org.lore.utils"), e le variabili relative allo Stato, Livello e Modalità (descritte con varie enum nel package "main.java.org.lore.models.mqtt").
 	 
-	 La GUI effettua una refresh periodica per mostrare la variazione dei valori degli attuatori in seguito ai messaggi MQTT di tipo write. Il metodo .refreshGUI()
-	 viene invocato ogni 2 secondi.
+La GUI effettua una refresh periodica per mostrare la variazione dei valori degli attuatori in seguito ai messaggi MQTT di tipo write. Il metodo .refreshGUI() viene invocato ogni 2 secondi.
 
-	 La SimulatorGUI inoltre contiene diversi (nel nostro caso 6, uno per ogni tipo di device) Thread dedicati ai Server TCP per ogni rispettivo device. Stampa anche a
-	 terminale ogni volta che una connessione TCP viene stabilita con successo e su quale porta.
+La SimulatorGUI inoltre contiene diversi (nel nostro caso 6, uno per ogni tipo di device) Thread dedicati ai Server TCP per ogni rispettivo device. Stampa anche a terminale ogni volta che una connessione TCP viene stabilita con successo e su quale porta.
 
--------la logica dei device è contenuta nel package "test.java.org.lore.tcp" nelle 3 classi TempTCPServer,UmiTCPServer e IllTCPServer: in esse
-	 invoco la .getRandomByRange() secondo i valori di ognuna unità di misura.
-	 Ognuna di queste classi avrà il metodo .compute() che, in base al tipo (READ/WRITE) di messaggio MQTT inviato entrerà nella porzione di codice adeguata della switch.
+La logica dei device è contenuta nel package "test.java.org.lore.tcp" nelle 3 classi TempTCPServer,UmiTCPServer e IllTCPServer: in esse invoco la .getRandomByRange() secondo i valori di ognuna unità di misura. Ognuna di queste classi avrà il metodo .compute() che, in base al tipo (READ/WRITE) di messaggio MQTT inviato entrerà nella porzione di codice adeguata della switch.
