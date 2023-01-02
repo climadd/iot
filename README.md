@@ -16,9 +16,9 @@ The 4 classes to run the gateway process are (ordered by launch timing):
 
 -The **Gateway**, as the bridge between the *Broker* and the *IOT Devices (Sensors and Actuators)*, communicates with the *Backend* through [MQTT protocol](https://mqtt.org/getting-started/), and makes use of dynamically-allocated TCP Sockets to establish the communication to the *IOT Devices*.
 
--The **Simulated Sensors** produce a fluctuation of values that are consistent to the measurement they are supposed to reproduce. As shown by the GUI, the Sensors will independently produce a stream of data whose instances will be sent to the *Backend* once Queries are sent to the Gateway: they could be part of a Backend script that periodically issues them, or issued each time a User manually requests the current measurements.
+-The **Simulated Sensors** produce a fluctuation of values that are consistent to the measurement they are supposed to reproduce. As shown by the GUI, the Sensors will independently produce a stream of data whose instances will be sent to the *Backend* once *Queries* are sent to the Gateway: they could be part of a Backend script that periodically issues them, or issued each time a User manually requests the current measurements.
 
--The **Simulated Actuators** hold *boolean* or *enumeration* type variables that are switched through the Gateway-issued Messages. The GUI lets us check their real-time status.
+-The **Simulated Actuators** hold *boolean* or *enumeration* type variables that are  through the Gateway-issued Messages. The GUI lets us check their real-time status.
 	
 -The **Simulated Backend** is split into 2 different Java Classes: *BackendMessageSender* e *BackendMessageReceiver*, they will print on terminal each sent or recieved Message.
 
