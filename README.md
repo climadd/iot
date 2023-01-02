@@ -1,8 +1,7 @@
-Lorenzo Mirto Bertoldo @climadd
+<sup>Lorenzo Mirto Bertoldo @climadd</sup>
+# GATEWAY IOT
 
-#GATEWAY IOT
-
-###Quickstart Guide
+### Quickstart Guide
 	
 The 4 classes to run the gateway process are (ordered by launch timing):
 
@@ -11,7 +10,7 @@ The 4 classes to run the gateway process are (ordered by launch timing):
  	3. SimulatorGUIApp.java 			 (in test.java.org.lore.mqtt.backend.simulators)
 	4. BackendMessageSender.java			 (in test.java.org.lore.mqtt.backend)
 
-###Project Overview
+### Project Overview
 
 	<image diagram>
 
