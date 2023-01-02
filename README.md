@@ -26,30 +26,36 @@ The 4 classes to run the gateway process are (ordered by launch timing):
 
 
 
- 		 TOPICS:
+##### TOPIC
 
- 		       Richiesta:
-  		          - azienda{idAzienda}/serra{idSerra}/sensori/temperatura/rx TOPIC di ricezione richiesta temperatura da parte del backend
-        		      3/5/sensori/temperatura/rx
-
- 		           - azienda{idAzienda}/serra{idSerra}/attuatori/illuminazione/rx TOPIC di ricezione richiesta di cambio stato o richiesta stato attuale
-       		       3/5/attuatori/illuminazione/rx
-
-  		      Risposta:
-  		          - azienda{idAzienda}/serra{idSerra}/sensori/temperatura/sx
-			         3/5/sensori/temperatura/sx
+**QUERIES**:
 	
-            		- azienda{idAzienda}/serra{idSerra}/attuatori/illuminazione/sx
-            		  3/5/attuatori/illuminazione/sx
+	- Ricezione richiesta temperatura da parte del backend
+ 	  - azienda{idAzienda}/serra{idSerra}/sensori/temperatura/rx 
+            - *example* 3/5/sensori/temperatura/rx
+	
+	- TOPIC di ricezione richiesta di cambio stato o richiesta stato attuale
+	  - azienda{idAzienda}/serra{idSerra}/attuatori/illuminazione/rx 
+	    - 3/5/attuatori/illuminazione/rx
 
-         		MESSAGE FORMAT:
-           		 - Messaggio su TOPIC Sensori di richiesta temperatura
+**ANSWERS**:
+	
+  	- azienda{idAzienda}/serra{idSerra}/sensori/temperatura/sx
+	  - *example* 3/5/sensori/temperatura/sx
+	
+        - azienda{idAzienda}/serra{idSerra}/attuatori/illuminazione/sx
+	  - *example* 3/5/attuatori/illuminazione/sx
+
+
+**MESSAGE FORMAT:**
+	 
+	 - Messaggio su TOPIC Sensori di richiesta temperatura
                		{
                 		type:"read",
                 		device:"sensori"
                		}
 
-            		- Messaggio su TOPIC Attuatori di richiesta cambio stato
+	- Messaggio su TOPIC Attuatori di richiesta cambio stato
                		{
              		   type:"write",
 		               device:"attuatori",
@@ -57,23 +63,22 @@ The 4 classes to run the gateway process are (ordered by launch timing):
 		               level:"low/medium/high"
  		               mode:"auto/manual"
      		            }
-
-    		        - Messaggio su TOPIC Attuatori di richiesta stato e livello attuale
+	- Messaggio su TOPIC Attuatori di richiesta stato e livello attuale
    		          {
    		            type:"read",
     		            device:"attuatori"
     		           }
 
-  		 RESPONSE MESSAGES
+**RESPONSE MESSAGES:**
 
-  		          - Messaggio di risposta alla richiesta di valore attuale di sensore
+	- Messaggio di risposta alla richiesta di valore attuale di sensore
     		          {
   		            type:"read",
      		     	      device:"sensori",
  		            value:float                      //Aggiunta campo di valore prelevato dal sensore
 		          }
 
-         		    - Messaggio di risposta alla richiesta di cambio stato Attuatore
+ 	- Messaggio di risposta alla richiesta di cambio stato Attuatore
         		      {
          		      type:"write",
          		      device:"attuatori",
