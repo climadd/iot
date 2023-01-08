@@ -12,7 +12,7 @@ The 4 classes to run the gateway process are (ordered by launch timing):
 
 ### Project Overview
 
-<img src="iot/progetto_reti2/src/readme/hexagonal.png" style="display: inline-block; margin: 0 auto; max-width: 300px">
+<img src="/progetto_reti2/src/readme/hexagonal.png" style="display: inline-block; margin: 0 auto; max-width: 300px">
 
 -The **Gateway**, as the bridge between the *Broker* and the *IOT Devices (Sensors and Actuators)*, communicates with the *Backend* through [MQTT protocol](https://mqtt.org/getting-started/), and makes use of dynamically-allocated TCP Sockets to establish the communication to the *IOT Devices*.
 
