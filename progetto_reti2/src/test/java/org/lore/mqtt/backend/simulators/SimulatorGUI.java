@@ -283,11 +283,11 @@ public class SimulatorGUI {
 
         umiLevel.setText("TEMPERATURE LEVEL: "+ umiTCPActuatorServer.getLevel());
         umiMode.setText("TEMPERATURE MODE: "+ umiTCPActuatorServer.getMode());
-        umiValue.setText("SENSOR TEMPERATURE VALUE: "+ umiTCPSensorServer.getValue()+"%");
+        umiValue.setText("SENSOR HUMIDITY VALUE: "+ umiTCPSensorServer.getValue()+"%");
 
         illLevel.setText("TEMPERATURE LEVEL: "+ illTCPActuatorServer.getLevel());
         illMode.setText("TEMPERATURE MODE: "+ illTCPActuatorServer.getMode());
-        illValue.setText("SENSOR TEMPERATURE VALUE: "+ illTCPSensorServer.getValue()+"lm");
+        illValue.setText("SENSOR ILLUMINATION VALUE: "+ illTCPSensorServer.getValue()+"lm");
     }
 
 }

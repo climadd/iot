@@ -21,7 +21,7 @@ public class BackendMessageSender {
         Thread.sleep(1000L);
         mqttPub.publish("3/5/sensori/umidita/rx","{\"type\":\"read\",\"device\":\"sensori\"}",true);
         Thread.sleep(1000L);
-        mqttPub.publish("3/5/attuatori/umidita/rx","{\"type\":\"write\",\"device\":\"attuatori\",\"state\":\"on\",\"level\":\"low\",\"mode\":\"auto\"}",true);
+        mqttPub.publish("3/5/attuatori/umidita/rx","{\"type\":\"write\",\"device\":\"attuatori\",\"state\":\"off\",\"level\":\"low\",\"mode\":\"auto\"}",true);
         Thread.sleep(1000L);
         mqttPub.publish("3/5/attuatori/illuminazione/rx","{\"type\":\"read\",\"device\":\"sensori\"}",true);
         Thread.sleep(1000L);

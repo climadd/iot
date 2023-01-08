@@ -1,4 +1,4 @@
-package org.lore.app;
+package org.lore.mqtt.app;
 
 
 import org.eclipse.paho.client.mqttv3.MqttException;
