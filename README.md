@@ -16,13 +16,13 @@ The 4 classes to run the gateway process are (ordered by launch timing):
 
 -The **Gateway**, as the bridge between the *Broker* and the *IOT Devices (Sensors and Actuators)*, communicates with the *Backend* through [MQTT protocol](https://mqtt.org/getting-started/), and makes use of dynamically-allocated TCP Sockets to establish the communication to the *IOT Devices*.
 
--The **Simulated Sensors** produce a fluctuation of values that are consistent to the measurement they are supposed to reproduce. As shown by the *GUI*, the Sensors will independently produce a stream of data whose instances will be sent through *TCP Socket* to the *Gateway* which, in turn, is going to encapsulate the recieved data in MQTT-formatted *Queries* for the *Backend* to recieve.<br />
+-The **Simulated Sensors** produce a fluctuation of values that are consistent to the measurement they are supposed to keep track of. As shown by the *GUI*, the Sensors will independently produce a stream of data whose instances will be sent through *TCP Socket* to the *Gateway* which, in turn, is going to encapsulate the recieved data in MQTT-formatted *Queries* for the *Backend* to recieve.<br />
 This whole process of data withdrawal can either be part of a Backend script that periodically issues them, or issued each time a User manually requests the current measurements.
 
--The **Simulated Actuators**, in order to accurately depict IOT Actuators that can switch between different modes, hold several *boolean* or *enumeration* type variables in their memory that can be modified by Gateway-issued Queries on its own dedicated TCP Socket.<br />
+-The **Simulated Actuators**, in order to accurately depict IOT Actuators that can toggle between different modes, hold several *boolean* or *enumeration* type variables in their memory that can be modified by Gateway-issued Queries on its own dedicated TCP Socket.<br />
 The GUI lets us check real-time the status of every IOT Actuators' variable.
 	
--The **Simulated Backend** is split into 2 different Java Classes: *BackendMessageSender* e *BackendMessageReceiver*, they will print on terminal each sent or recieved Message.
+-The **Simulated Backend** is split into 2 different Java Classes: *BackendMessageSender* and *BackendMessageReceiver*, on top of message handling on the other end of the broker, they will also print on terminal each sent or recieved Message.
 
 -The **Messages** are MQTT formatted, every enumeration-type data relative to both Messages and Measurements is catalogued in "main.java.org.lore.models.mqtt" project's package.
 
