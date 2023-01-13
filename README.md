@@ -22,7 +22,7 @@ This whole process of data withdrawal can either be part of a Backend script tha
 -The **Simulated Actuators**, in order to accurately depict IOT Actuators that can toggle between different modes, hold several *boolean* or *enumeration* type variables in their memory that can be modified by Gateway-issued Queries on its own dedicated TCP Socket.<br />
 The GUI lets us check real-time the status of every IOT Actuators' variable.
 	
--The **Simulated Backend** is split into 2 different Java Classes: *BackendMessageSender* and *BackendMessageReceiver*, on top of message handling on the other end of the broker, they will also print on terminal each sent or recieved Message.
+-The **Simulated Backend** is split into 2 different Java Classes: *BackendMessageSender* and *BackendMessageReceiver* which, on top of handling the messages at the other end of the *MQTT Broker*, will also print on terminal each sent or recieved Message.
 
 -The **Messages** are MQTT formatted, every enumeration-type data relative to both Messages and Measurements is catalogued in "main.java.org.lore.models.mqtt" project's package.
 
