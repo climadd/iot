@@ -142,8 +142,3 @@ The gateway process involves four main classes that must be executed in the foll
   - Implemented in `test.java.org.lore.tcp` within the classes `TempTCPServer`, `UmiTCPServer`, and `IllTCPServer`.  
   - Each class invokes `.getRandomByRange()` to generate sensor values.  
   - The `.compute()` method processes incoming MQTT messages, executing the corresponding logic based on message type (`READ` or `WRITE`).  
-ito ai messaggi MQTT di tipo write. Il metodo .refreshGUI() viene invocato ogni 2 secondi.
-
-La SimulatorGUI inoltre contiene diversi (nel nostro caso 6, uno per ogni tipo di device) Thread dedicati ai Server TCP per ogni rispettivo device. Stampa anche a terminale ogni volta che una connessione TCP viene stabilita con successo e su quale porta.
-
-La logica dei device è contenuta nel package "test.java.org.lore.tcp" nelle 3 classi TempTCPServer,UmiTCPServer e IllTCPServer: in esse invoco la .getRandomByRange() secondo i valori di ognuna unità di misura. Ognuna di queste classi avrà il metodo .compute() che, in base al tipo (READ/WRITE) di messaggio MQTT inviato entrerà nella porzione di codice adeguata della switch.
