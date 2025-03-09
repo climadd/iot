@@ -1,119 +1,148 @@
 <sup>Lorenzo Mirto Bertoldo @climadd</sup>
-# GATEWAY IOT
 
-### Quickstart Guide
-	
-The 4 classes to run the gateway process are (ordered by launch timing):
+# IoT Gateway
 
-	1. BackendMessageReceiver.java			 (in test.java.org.lore.mqtt.backend)
-	2. GatewayApp.java 				 (in main.java.org.lore.app)
- 	3. SimulatorGUIApp.java 			 (in test.java.org.lore.mqtt.backend.simulators)
-	4. BackendMessageSender.java			 (in test.java.org.lore.mqtt.backend)
+## Quickstart Guide
 
-### Project Overview
+The gateway process involves four main classes that must be executed in the following order:
+
+1. **BackendMessageReceiver.java** – `test.java.org.lore.mqtt.backend`
+2. **GatewayApp.java** – `main.java.org.lore.app`
+3. **SimulatorGUIApp.java** – `test.java.org.lore.mqtt.backend.simulators`
+4. **BackendMessageSender.java** – `test.java.org.lore.mqtt.backend`
+
+---
+
+## Project Overview
 
 <img src="/progetto_reti2/src/readme/hexagonal.png" style="display: inline-block; margin: 0 auto; max-width: 300px">
 
--The **Gateway**, as the bridge between the *Broker* and the *IOT Devices (Sensors and Actuators)*, communicates with the *Backend* through [MQTT protocol](https://mqtt.org/getting-started/), and makes use of dynamically-allocated TCP Sockets to establish the communication to the *IOT Devices*.
+- The **Gateway** acts as a bridge between the *Broker* and the *IoT Devices (Sensors and Actuators)*. It communicates with the *Backend* via the [MQTT protocol](https://mqtt.org/getting-started/) and uses dynamically allocated TCP sockets to establish communication with the *IoT Devices*.
 
--The **Simulated Sensors** produce a fluctuation of values that are consistent to the measurement they are supposed to keep track of. As shown by the *GUI*, the Sensors will independently produce a stream of data whose instances will be sent through *TCP Socket* to the *Gateway* which, in turn, is going to encapsulate the recieved data in MQTT-formatted *Queries* for the *Backend* to recieve.<br />
-This whole process of data withdrawal can either be part of a Backend script that periodically issues them, or issued each time a User manually requests the current measurements.
+- The **Simulated Sensors** generate realistic fluctuations in their measured values. As displayed in the *GUI*, sensors independently produce a stream of data, which is sent via *TCP Socket* to the *Gateway*. The gateway encapsulates this data into MQTT-formatted *Queries* for the *Backend*. This data retrieval process can either be scheduled by a backend script or triggered manually by user requests.
 
--The **Simulated Actuators**, in order to accurately depict IOT Actuators that can toggle between different modes, hold several *boolean* or *enumeration* type variables in their memory that can be modified by Gateway-issued Queries on its own dedicated TCP Socket.<br />
-The GUI lets us check real-time the status of every IOT Actuators' variable.
-	
--The **Simulated Backend** is split into 2 different Java Classes: *BackendMessageSender* and *BackendMessageReceiver* which, on top of handling the messages at the other end of the *MQTT Broker*, will also print on terminal each sent or recieved Message.
+- The **Simulated Actuators** mimic real IoT actuators that toggle between different modes. They store multiple *boolean* or *enumeration* values, which can be modified by gateway-issued queries through their dedicated TCP socket. The GUI displays the real-time status of all actuator variables.
 
--The **Messages** are MQTT formatted, every enumeration-type data relative to both Messages and Measurements is catalogued in "main.java.org.lore.models.mqtt" project's package.
+- The **Simulated Backend** consists of two classes:  
+  - `BackendMessageSender` – Handles sending messages through the *MQTT Broker*.  
+  - `BackendMessageReceiver` – Receives and prints incoming messages in the terminal.
 
+- The **Messages** follow the MQTT format, and all enumeration-type data related to both messages and measurements is cataloged in the `main.java.org.lore.models.mqtt` package.
 
+---
 
+## MQTT Message Topics and Format
 
-### MQTT Message Topics and Format
+### **Query Topics**  
+- **Request for sensor temperature data**  
+  - Topic: `azienda{idAzienda}/serra{idSerra}/sensori/temperatura/rx`  
+  - *Example:* `3/5/sensori/temperatura/rx`
 
-**QUERIES**:
-	
-	- Ricezione richiesta temperatura da parte del backend
- 	  - azienda{idAzienda}/serra{idSerra}/sensori/temperatura/rx 
-            - *example* 3/5/sensori/temperatura/rx
-	
-	- TOPIC di ricezione richiesta di cambio stato o richiesta stato attuale
-	  - azienda{idAzienda}/serra{idSerra}/attuatori/illuminazione/rx 
-	    - 3/5/attuatori/illuminazione/rx
+- **Request for actuator state or status change**  
+  - Topic: `azienda{idAzienda}/serra{idSerra}/attuatori/illuminazione/rx`  
+  - *Example:* `3/5/attuatori/illuminazione/rx`
 
-**ANSWERS**:
-	
-  	- azienda{idAzienda}/serra{idSerra}/sensori/temperatura/sx
-	  - *example* 3/5/sensori/temperatura/sx
-	
-        - azienda{idAzienda}/serra{idSerra}/attuatori/illuminazione/sx
-	  - *example* 3/5/attuatori/illuminazione/sx
+### **Response Topics**  
+- **Sensor temperature response**  
+  - Topic: `azienda{idAzienda}/serra{idSerra}/sensori/temperatura/sx`  
+  - *Example:* `3/5/sensori/temperatura/sx`
 
+- **Actuator state response**  
+  - Topic: `azienda{idAzienda}/serra{idSerra}/attuatori/illuminazione/sx`  
+  - *Example:* `3/5/attuatori/illuminazione/sx`
 
-**MESSAGE FORMAT:**
-	 
-	 - Messaggio su TOPIC Sensori di richiesta temperatura
-               		{
-                		type:"read",
-                		device:"sensori"
-               		}
+### **Message Format**
+#### **Sensor Request Message**
+```json
+{
+  "type": "read",
+  "device": "sensori"
+}
+```
 
-	- Messaggio su TOPIC Attuatori di richiesta cambio stato
-               		{
-             		   type:"write",
-		               device:"attuatori",
-		               state:"on/off",
-		               level:"low/medium/high"
- 		               mode:"auto/manual"
-     		            }
-	- Messaggio su TOPIC Attuatori di richiesta stato e livello attuale
-   		          {
-   		            type:"read",
-    		            device:"attuatori"
-    		           }
+##### **Actuator State Change Request Message**
+```json
+{
+  "type": "write",
+  "device": "attuatori",
+  "state": "on/off",
+  "level": "low/medium/high",
+  "mode": "auto/manual"
+}
+```
+##### **Actuator Status Request Message**
+```json
+{
+  "type": "read",
+  "device": "attuatori"
+}
+```
+### **RESPONSE MESSAGES:**
+#### **Sensor Data Response**
+```json
+{
+  "type": "read",
+  "device": "sensori",
+  "value": float		//Exclusive to sensor device
+}
+```
+ #### **Actuator State Change Response**
+```json
+{
+  "type": "write",
+  "device": "attuatori",
+  "state": "on/off",
+  "level": "low/medium/high",
+  "mode": "auto/manual",
+  "result": boolean		//Exclusive to sensor (true = operation successful)
+}
+```
 
-**RESPONSE MESSAGES:**
+### Structural Analysis  
 
-	- Messaggio di risposta alla richiesta di valore attuale di sensore
-    		          {
-  		            type:"read",
-     		     	      device:"sensori",
- 		            value:float                      //Aggiunta campo di valore prelevato dal sensore
-		          }
+#### **GatewayApp**  
+- **Function**: Receives MQTT messages and forwards them via TCP sockets to the appropriate IoT devices.  
+- **Response Handling**: Creates a `response` object upon receiving a message and sends it to the backend.  
 
- 	- Messaggio di risposta alla richiesta di cambio stato Attuatore
-        		      {
-         		      type:"write",
-         		      device:"attuatori",
-          		      state:"on/off",
-           		      level:"low/medium/high",
-          		      mode:"auto/manual",
-          		      result:boolean                         //Aggiunta campo di successo(true = buon fine)
-         		      }
+#### **Scalability**  
+- **Initial Specification**: Assumes a fixed number of sensor-actuator pairs (Temperature, Humidity, Lighting).  
+- **Future Expansion**: Uses hashmaps for dynamic TCP socket initialization, allowing support for additional devices.  
 
+#### **MQTT Processing**  
+- **Listener Class**: `GWBEListener`  
+- **Subscription**: Registers a listener using the `.subscribe()` method.  
+- **Message Handling**:  
+  - **Trigger**: The `.messageArrived()` method is invoked upon message reception.  
+  - **Processing**: Extracts topic fields and parses the JSON payload to determine the necessary actions.  
 
+#### **BackendMessageSender**  
+- **Purpose**: Simulates backend requests.  
+- **Logging**: Prints all sent messages to the terminal.  
+- **Connection Management**: Performs `.disconnect()` and `.close()` once all messages are sent.  
 
+#### **BackendMessageReceiver**  
+- **Purpose**: Simulates the backend receiving MQTT messages.  
+- **Logging**: Prints all received messages to the terminal.  
+- **Subscription**: Uses `.subscribe()` to listen to the appropriate topic, utilizing `DummyListener.java`, an interface extending `IMqttMessageListener`.  
 
+#### **SimulatorGUIApp**  
+- **Function**: Provides a graphical interface to monitor sensor measurements and actuator states.  
+- **Sensor Values**:  
+  - Initialized to `0`  
+  - Updated every **30 seconds** using `.getRandomByRange()` from `RandomUtils`  
+- **Actuator States**: Variables like State, Level, and Mode are defined as enums in `main.java.org.lore.models.mqtt`.  
+- **GUI Refresh**:  
+  - Refreshes every **2 seconds** via `.refreshGUI()`  
+  - Displays actuator state updates in response to MQTT "write" messages.  
 
-
-### Structural Analysis
-	
-La GatewayApp si occuperà di ricevere messaggi MQTT su Topic e inoltarli tramite TCP socket ai Device. L'arrivo di un messaggio comporterà la costituzione di un oggetto "response" che verrà inviato al backend.
-
-Sebbene in fase di specifica abbiamo adottato la convenzione che in un campo sia presente 3 sole coppie di device (sensore+attuatore), una per ogni deviceType (Temperatura/Umidità/Illuminazione), il Gateway si presta comunque a eventuale espansione progettuale facendo utilizzo delle hashmaps come struttura dinamica per poter inizializzare le socket TCP per il collegamento con i diversi devices.
-
-Nella GatwayApp invocherò il metodo ".subscribe" a cui passerò come parametro l'oggettino "listener" creato sulla base della classe GWBEListener, in cui è anche presente anche la logica del processing dei messaggi MQTT: non appena un messaggio verrà ricevuto, il metodo ".messageArrived" di GWBEListener verrà invocato in modo da effettuare la split dei diversi campi del topic e l'unmarshalling del json per interpretarlo e permettere al Gateway di estrapolare quali saranno le informazioni da mandare e dove mandarle.
-
-
-Il BackendMessageSender si occuperà di simulare le richieste che partono dal backend, stampando anche su terminale i messaggi MQTT inviati. Esso effettuerà la .disconnect() e la .close() una volta inviati tutti i messaggi previsti. 
-
-
-il BackendMessageReceiver simula il reciever sul lato backend e stamperà su teminale i messaggi ricevuti. alla sua .subscribe() passerò sia il topic adeguato, sia il DummyListener.java: una interfaccia sulla base della classe IMqttMessageListener che effettua anche la print dei messaggi arrivati.
-
-
-la SimulatorGUIApp, la cui logica è contenuta in SimulatorGUI, consiste nell'interfaccia grafica che ci permette di controllare le misure dei sensori rilevate periodicamente (Inizializzati a 0; ogni 30 secondi invoco il mio metodo .getRandomByRange() contenuto nella classe RandomUtils nel package "test.java.org.lore.utils"), e le variabili relative allo Stato, Livello e Modalità (descritte con varie enum nel package "main.java.org.lore.models.mqtt").
-	 
-La GUI effettua una refresh periodica per mostrare la variazione dei valori degli attuatori in seguito ai messaggi MQTT di tipo write. Il metodo .refreshGUI() viene invocato ogni 2 secondi.
+#### **TCP Servers for Simulated Devices**  
+- **Thread Management**: GUI contains **6 threads** (one per device type), each running a dedicated TCP server.  
+- **Logging**: Prints messages to the terminal when a TCP connection is successfully established.  
+- **Device Logic**:  
+  - Implemented in `test.java.org.lore.tcp` within the classes `TempTCPServer`, `UmiTCPServer`, and `IllTCPServer`.  
+  - Each class invokes `.getRandomByRange()` to generate sensor values.  
+  - The `.compute()` method processes incoming MQTT messages, executing the corresponding logic based on message type (`READ` or `WRITE`).  
+ito ai messaggi MQTT di tipo write. Il metodo .refreshGUI() viene invocato ogni 2 secondi.
 
 La SimulatorGUI inoltre contiene diversi (nel nostro caso 6, uno per ogni tipo di device) Thread dedicati ai Server TCP per ogni rispettivo device. Stampa anche a terminale ogni volta che una connessione TCP viene stabilita con successo e su quale porta.
 
