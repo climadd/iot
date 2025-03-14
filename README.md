@@ -6,10 +6,10 @@
 
 The gateway process involves four main classes that must be executed in the following order:
 
-1. **BackendMessageReceiver.java** – `test.java.org.lore.mqtt.backend`
-2. **GatewayApp.java** – `main.java.org.lore.app`
-3. **SimulatorGUIApp.java** – `test.java.org.lore.mqtt.backend.simulators`
-4. **BackendMessageSender.java** – `test.java.org.lore.mqtt.backend`
+1. **BackendMessageReceiver.java** – `iotGateway.src.test.java.org.lore.mqtt.backend`
+2. **GatewayApp.java** – `iotGateway.src.main.java.org.lore.app`
+3. **SimulatorGUIApp.java** – `iotGateway.src.test.java.org.lore.mqtt.backend.simulators`
+4. **BackendMessageSender.java** – `iotGateway.src.test.java.org.lore.mqtt.backend`
 
 ---
 
