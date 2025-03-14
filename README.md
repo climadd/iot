@@ -15,7 +15,7 @@ The gateway process involves four main classes that must be executed in the foll
 
 ## Project Overview
 
-<img src="/progetto_reti2/src/readme/hexagonal.png" style="display: inline-block; margin: 0 auto; max-width: 300px">
+<img src="/iotGateway/src/readme/hexagonal.png" style="display: inline-block; margin: 0 auto; max-width: 300px">
 
 - The **Gateway** acts as a bridge between the *Broker* and the *IoT Devices (Sensors and Actuators)*. It communicates with the *Backend* via the [MQTT protocol](https://mqtt.org/getting-started/) and uses dynamically allocated TCP sockets to establish communication with the *IoT Devices*.
 
