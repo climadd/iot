@@ -17,7 +17,9 @@ The gateway process involves four main classes that must be executed in the foll
 
 <img src="/iotGateway/src/readme/hexagonal.png" style="display: inline-block; margin: 0 auto; max-width: 300px">
 
-- The **Gateway** acts as a bridge between the *Broker* and the *IoT Devices (Sensors and Actuators)*. It communicates with the *Backend* via the [MQTT protocol](https://mqtt.org/getting-started/) and uses dynamically allocated TCP sockets to establish communication with the *IoT Devices*.
+- The **Gateway** acts as a bridge between the *Broker* and the *IoT Devices (Sensors and Actuators)*. It exposes and consumes a *protocol-based API*, handling bidirectional communication between distributed system components using both TCP sockets and MQTT messaging.
+
+- Communication with the *Backend* occurs via the [MQTT protocol](https://mqtt.org/getting-started/) following a publish/subscribe model, while dynamically allocated TCP sockets are used to establish and manage connections with *IoT Devices*. The Gateway is responsible for protocol translation, acting as an adapter between a custom TCP-based device communication protocol and an MQTT-based backend integration API.
 
 - The **Simulated Sensors** generate realistic fluctuations in their measured values. As displayed in the *GUI*, sensors independently produce a stream of data, which is sent via *TCP Socket* to the *Gateway*. The gateway encapsulates this data into MQTT-formatted *Queries* for the *Backend*. This data retrieval process can either be scheduled by a backend script or triggered manually by user requests.
 
