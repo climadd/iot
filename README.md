@@ -54,6 +54,8 @@ The gateway process involves four main classes that must be executed in the foll
   - *Example:* `3/5/attuatori/illuminazione/sx`
 
 ### **Message Format**
+The message format is defined in JSON, and the communication operates as a fully protocol-based API.
+
 #### **Sensor Request Message**
 ```json
 {
