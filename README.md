@@ -35,7 +35,7 @@ The gateway process involves four main classes that must be executed in the foll
 
 ## MQTT Message Topics and Format
 
-### **Query Topics**  
+### **Query Topics**  [.../rx]
 - **Request for sensor temperature data**  
   - Topic: `azienda{idAzienda}/serra{idSerra}/sensori/temperatura/rx`  
   - *Example:* `3/5/sensori/temperatura/rx`
@@ -44,7 +44,7 @@ The gateway process involves four main classes that must be executed in the foll
   - Topic: `azienda{idAzienda}/serra{idSerra}/attuatori/illuminazione/rx`  
   - *Example:* `3/5/attuatori/illuminazione/rx`
 
-### **Response Topics**  
+### **Response Topics**  [.../sx]
 - **Sensor temperature response**  
   - Topic: `azienda{idAzienda}/serra{idSerra}/sensori/temperatura/sx`  
   - *Example:* `3/5/sensori/temperatura/sx`
